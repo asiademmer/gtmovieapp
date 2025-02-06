@@ -22,6 +22,7 @@ from django.urls import path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('accounts/', include('accounts.urls')),
 ]
 admin.site.site_header = "GTMovieApp Administration"
 admin.site.site_title = "GTMovieApp Administration"
