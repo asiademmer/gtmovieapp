@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .model import Movie, Reviews
+from .model import Movie, Reviews, Orders
 from django.contrib.admin.sites import AdminSite
 
 
@@ -25,3 +25,9 @@ class ReviewAdmin(admin.ModelAdmin):
     list_display = ('movie', 'user', 'rating')
     search_fields = ('movie__title', 'user__username')
     list_filter = ('movie__title', 'user__username')
+
+@admin.register(Orders)
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ('user', 'movie')
+    search_fields = ('user__username', 'movie__title')
+    list_filter = ('user__username', 'movie__title')
