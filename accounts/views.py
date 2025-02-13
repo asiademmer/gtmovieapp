@@ -4,6 +4,9 @@ from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import redirect
 from .forms import CustomUserCreationForm, CustomErrorList
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse_lazy
+from django.contrib.auth.views import PasswordResetView
+from django.contrib.messages.views import SuccessMessageMixin
 @login_required
 def logout(request):
     auth_logout(request)
@@ -45,3 +48,10 @@ def signup(request):
             template_data['form'] = form
             return render(request, 'accounts/signup.html',
                           {'template_data': template_data})
+
+class resetPassword(SuccessMessageMixin, PasswordResetView):
+    template_name = 'accounts/password_reset.html'
+    email_template_name = 'accounts/password_reset_email.html'
+    subject_template_name = 'accounts/password_reset_subject.txt'
+    success_message = "We've emailed you instructions for setting your password."
+    success_url = reverse_lazy('home.index')
