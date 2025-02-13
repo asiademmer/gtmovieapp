@@ -46,6 +46,12 @@
                 "{% url 'home.about' %}">About</a>
                 <a class="nav-link" href=
                    "{% url 'movies.index' %}">Movies</a>
+                    <a class="nav-link" href=
+                            "{% url 'accounts.login' %}">Log In</a>
+                            <a class="nav-link" href=
+                                    "{% url 'accounts.signup' %}">Sign Up</a>
+                                    <a class="nav-link" href=
+                                          "{% url 'cart.index' %}">Cart</a>
           </div>
         </div>
       </div>
@@ -79,6 +85,12 @@
               href="{% url 'home.about' %}">About</a></p>
             <a class="nav-link" href=
               "{% url 'movies.index' %}">Movies</a>
+            <a class="nav-link" href=
+              "{% url 'accounts.login' %}">Log In</a>
+            <a class="nav-link" href=
+              "{% url 'accounts.signup' %}">Sign Up</a>
+            <a class="nav-link" href=
+              "{% url 'cart.index' %}">Cart</a>
             </div>
           <div class="col-md-3 col-lg-3 col-xl-3 mx-auto
                mb-4">
