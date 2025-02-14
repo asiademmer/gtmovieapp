@@ -1,4 +1,4 @@
-% extends 'base.html' %}
+{% extends 'base.html' %}
 {% block content %}
 <div class="p-3 mt-4">
   <div class="container">
@@ -6,7 +6,7 @@
       <div class="col-md-8">
         <div class="card shadow p-3 mb-4 rounded">
           <div class="card-body">
-            <h2>Login</h2>
+            <h2>Login :-)</h2>
             <hr />
             {% if template_data.error %}
             <div class="alert alert-danger" role="alert">
@@ -34,6 +34,21 @@
                   class="btn bg-dark text-white">Login
                 </button>
               </div>
+              <p>
+                <div class="text-center">
+                  <button type="button" class="btn bg-dark text-white"
+                          onclick="location.href='http://127.0.0.1:8000/accounts/signup'">Sign Up
+                  </button>
+                </div>
+              </p>
+              <p>
+              <div class="ms-footer-bottom">
+                <button type="reset"
+                  class="ms-footer-bottom"> Clear Boxes
+                </button>
+              </div>
+              </p>
+              <a href="{% url 'password_reset' %}"><i>Forgot Password?</i></a>
             </form>
           </div>
         </div>
