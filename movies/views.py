@@ -1,29 +1,61 @@
-
+import requests
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Movie, Review
 from django.contrib.auth.decorators import login_required
 
-# Create your views here.
+API_URL = "https://api.themoviedb.org/3/movie/"
+API_KEY = "6729c4cad6820ce8cfdfc6ffe135b332"
+
 
 def index(request):
     search_term = request.GET.get('search')
-    if search_term:
-        movies = Movie.objects.filter(name__icontains=search_term)
+    page_number = request.GET.get('page', 1)
+
+    # Fetch movies from API
+    response = requests.get(f"https://api.themoviedb.org/3/discover/movie?api_key={API_KEY}&page={page_number}")
+
+    # Debugging: Print the raw response text to check for any issues
+    if response.status_code == 200:
+        try:
+            api_movies = response.json().get('results', [])  # Parse the JSON
+        except ValueError as e:
+            print("Error parsing JSON:", e)
+            api_movies = []
     else:
-        movies = Movie.objects.all()
-    template_data = {}
-    template_data['title'] = 'Movies'
-    template_data['movies'] = movies
-    return render(request, 'movies/index.html',{'template_data': template_data})
+        api_movies = []
+
+    total_pages = response.json().get('total_pages', 1) if api_movies else 1
+
+    if search_term:
+        api_movies = [movie for movie in api_movies if search_term.lower() in movie["title"].lower()]
+
+    template_data = {
+        'title': 'Movies',
+        'movies': api_movies,
+        'page': int(page_number),
+        'total_pages': total_pages,
+    }
+    return render(request, 'movies/index.html', {'template_data': template_data})
+
 
 def show(request, id):
-    movie = Movie.objects.get(id=id)
-    reviews = Review.objects.filter(movie=movie)
-    template_data = {}
-    template_data['title'] = movie.name
-    template_data['movie'] = movie
-    template_data['reviews'] = reviews
-    return render(request, 'movies/show.html',{'template_data': template_data})
+    # Fetch movie details from TMDb API
+    response = requests.get(f"{API_URL}{id}?api_key={API_KEY}")
+    if response.status_code == 200:
+        movie_details = response.json()
+    else:
+        movie_details = None
+
+    # Get reviews from the database
+    reviews = Review.objects.filter(movie_id=id)
+
+    template_data = {
+        'title': movie_details['title'] if movie_details else 'Movie Not Found',
+        'movie': movie_details,
+        'reviews': reviews,
+    }
+
+    return render(request, 'movies/show.html', {'template_data': template_data})
 
 @login_required
 def create_review(request, id):
@@ -63,4 +95,3 @@ def delete_review(request, id, review_id):
         user=request.user)
     review.delete()
     return redirect('movies.show', id=id)
-
