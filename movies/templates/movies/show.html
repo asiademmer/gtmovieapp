@@ -34,7 +34,8 @@
         <h2>{{ template_data.movie.name }}</h2>
         <hr />
         <p><b>Description:</b> {{ template_data.movie.description }}</p>
-        <p><b>Price:</b> ${{template_data.movie.price }}</p>
+        <p><b>Price:</b> ${{ template_data.movie.price }}</p>
+
         <h2>Reviews</h2>
         <hr />
         <ul class="list-group">
@@ -49,15 +50,18 @@
             <p class="card-text">{{ review.comment }}</p>
             {% if user.is_authenticated and user == review.user %}
             <a class="btn btn-primary"
-              href="{% url 'movies.edit_review' id=template_data.movie.id review_id=review.id %}">Edit
+              href="{% url 'movies.edit_review' id=template_data.movie.id review_id=review.id %}">
+              Edit
             </a>
             <a class="btn btn-danger"
-              href="{% url 'movies.delete_review' id=template_data.movie.id review_id=review.id %}">Delete
+              href="{% url 'movies.delete_review' id=template_data.movie.id review_id=review.id %}">
+              Delete
             </a>
             {% endif %}
           </li>
           {% endfor %}
         </ul>
+
         {% if user.is_authenticated %}
         <div class="container mt-4">
           <div class="row justify-content-center">
@@ -65,18 +69,15 @@
               <div class="card shadow p-3 mb-4 rounded">
                 <div class="card-body">
                   <b class="text-start">Create a review</b><br /><br />
-                  <form method="POST" action=
-                    "{% url 'movies.create_review' id=template_data.movie.id %}">
+                  <form method="POST" action="{% url 'movies.create_review' id=template_data.movie.id %}">
                     {% csrf_token %}
                     <p>
                       <label for="comment">Comment:</label>
-                      <textarea name="comment" required
-                      class="form-control"
-                      id="comment"></textarea>
+                      <textarea name="comment" required class="form-control" id="comment"></textarea>
                     </p>
+
                     <div class="text-center">
-                      <button type="submit"
-                        class="btn bg-dark text-white">
+                      <button type="submit" class="btn bg-dark text-white">
                         Add Review
                       </button>
                     </div>
