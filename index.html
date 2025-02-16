@@ -1,0 +1,55 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GTMovies</title>
+    <style>
+        /* Grid container for movie posters */
+        .movie-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 columns */
+            gap: 20px; /* Space between items */
+            padding: 20px;
+        }
+
+        /* Style for each movie item */
+        .movie-item {
+            text-align: center;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+
+        .movie-item img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .movie-item h2 {
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+
+        .movie-item p {
+            font-size: 0.9em;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to GTMovies!</h1>
+    <div class="movie-grid">
+        {% for movie in movies %}
+            <div class="movie-item">
+                <a href="{% url 'movie_detail' movie.id %}">
+                    <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" alt="{{ movie.title }} Poster">
+                    <h2>{{ movie.title }}</h2>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
