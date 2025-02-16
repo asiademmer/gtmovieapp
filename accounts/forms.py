@@ -39,11 +39,11 @@ class CustomUserCreationForm(UserCreationForm):
     def clean_password1(self):
         password = self.cleaned_data.get("password1")
 
-        # Enforce minimum length
+        # request minimum length
         if len(password) < 8:
             raise ValidationError("Password must be at least 8 characters long.")
 
-        # Enforce at least one uppercase letter
+        # request at least one uppercase letter
         if not any(char.isupper() for char in password):
             raise ValidationError("Password must contain at least one uppercase letter.")
 
@@ -51,8 +51,8 @@ class CustomUserCreationForm(UserCreationForm):
         if not any(char.isdigit() for char in password):
             raise ValidationError("Password must contain at least one digit.")
 
-        # Restrict certain characters (example: spaces and special symbols)
-        if re.search(r'[<>!@#]', password):  # Add more restricted characters if needed
+        # bar certain characters (example: spaces and special symbols)
+        if re.search(r'[<>!@#]', password):
             raise ValidationError("Password cannot contain <, >, !, @, or #.")
 
         return password
