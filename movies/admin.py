@@ -12,3 +12,5 @@ admin.site.register(Movie, MovieAdmin)
 admin.site.register(Review)
 
 
+
+
