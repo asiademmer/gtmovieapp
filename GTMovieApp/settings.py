@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-s^-zdsaxh+4($9z=s+sk)zd_mw4d0(%w+et@r7s&4i*k!wfclp
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["gtmovieapp.onrender.com"]
 
 
 # Application definition
