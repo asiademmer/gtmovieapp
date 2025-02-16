@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ movie.title }}</title>
+    <style>
+        .movie-detail {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .movie-detail img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .movie-detail h1 {
+            font-size: 2em;
+            margin: 20px 0;
+        }
+
+        .movie-detail p {
+            font-size: 1em;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #007BFF;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="movie-detail">
+        <h1>{{ movie.title }}</h1>
+        <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" alt="{{ movie.title }} Poster">
+        <p><strong>Genre:</strong> 
+            {% for genre_name in movie.genre_names %}
+                {{ genre_name }}{% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        </p>
+        <p><strong>Overview:</strong> {{ movie.overview }}</p>
+        <p><strong>Release Date:</strong> {{ movie.release_date }}</p>
+        <a href="{% url 'index' %}" class="back-link">Back to Movie List</a>
+    </div>
+</body>
+</html>
