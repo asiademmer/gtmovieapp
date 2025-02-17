@@ -19,16 +19,8 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
-from accounts.views import ResetPassword, ChangePasswordView
+from accounts.views import ResetPassword, ChangePassword
 from django.urls import path
-from django.contrib.auth import views as auth_views
-
-
-from django.conf import settings
-from django.conf.urls.static import static
-from django.contrib import admin
-from django.urls import path, include
-from accounts.views import ResetPassword, ChangePasswordView
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
@@ -37,14 +29,6 @@ urlpatterns = [
     path('', include('home.urls')),
     path('movies/', include('movies.urls')),  # Include movies URLs
     path('cart/', include('cart.urls')),
-    path('password-reset/', ResetPassword.as_view(), name='password_reset'),
-    path('password-reset-confirm/<uidb64>/<token>/',
-         auth_views.PasswordResetConfirmView.as_view(template_name='accounts/password_reset_confirm.html'),
-         name='password_reset_confirm'),
-    path('password-reset-complete/',
-         auth_views.PasswordResetCompleteView.as_view(template_name='accounts/password_reset_complete.html'),
-         name='password_reset_complete'),
-    path('password-change/', ChangePasswordView.as_view(), name='password_change'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
