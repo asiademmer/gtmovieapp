@@ -1,30 +1,23 @@
 {% extends 'base.html' %}
 {% block content %}
-<header class="masthead bg-index text-white text-center
-           py-4">
-  <div class="container d-flex align-items-center flex-
-  column pt-2">
-    <h2>Movies Store</h2>
-    <p>Your Ticket to Unlimited Entertainment!</p>
-  </div>
-</header>
-{% if messages %}
-    <div class="container mt-3">
-        {% for message in messages %}
-            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
-                {{ message }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        {% endfor %}
-    </div>
-{% endif %}
-<div class="p-3">
+{% load static %}
+<div class="p-3" style="background-color: #FFFFFA; color: #080705;">
   <div class="container">
     <div class="row mt-3">
-      <div class="col mx-auto text-center
-        <h4>Welcome to the best movie store!!</h4>
+      <div class="col-md-6 mx-auto mb-3">
+        <h2 style="color: #080705;">Welcome</h2>
+        <hr style="border-color: #702632FF;" />
+        <p style="color: #080705;">
+          Make sure to <strong>log in/ sign in</strong> to enjoy full access!<br />
+          Navigate to the <strong>About</strong> page to read more about us.<br />
+          Visit the <strong>Movies</strong> section to select, review, or add a movie to your cart.<br />
+          Don't forget to check your <strong>Cart</strong> to buy your favorite movies! <br />
+        </p>
       </div>
     </div>
   </div>
 </div>
+
 {% endblock content %}
+
+

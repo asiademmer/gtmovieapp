@@ -2,29 +2,28 @@
 {% block content %}
 {% load static %}
 
-<div class="p-3">
+<div class="p-3" style="background-color: #FFFFFA; color: #080705;">
   <div class="container">
     <div class="row mt-3">
       <div class="col mx-auto mb-3">
-        <h2>{{ template_data.title }}</h2>
-        <hr />
+        <h2 style="color: #080705;">{{ template_data.title }}</h2>
+        <hr style="border-color: #702632FF;" />
         <form method="GET">
           <div class="row">
             <div class="col-auto">
               <div class="input-group col-auto">
-                <div class="input-group-text">Search</div>
-                <input type="text" class="form-control" name="search" value="{{ request.GET.search }}">
+                <div class="input-group-text" style="background-color: #702632FF; color: #FFFFFA;">Search</div>
+                <input type="text" class="form-control" name="search" value="{{ request.GET.search }}" style="background-color: #FFFFFA; color: #080705; border: 1px solid #912F40;">
               </div>
             </div>
             <div class="col-auto">
-              <button class="btn bg-dark text-white" type="submit">Search</button>
+              <button class="btn" type="submit" style="background-color: #702632; color: #FFFFFA;">Search</button>
             </div>
           </div>
         </form>
       </div>
     </div>
 
-    <!-- Movie Grid Layout -->
     <div class="movie-grid">
       {% for movie in template_data.movies %}
         <div class="movie-item">
@@ -42,23 +41,23 @@
         <ul class="pagination justify-content-center">
           {% if template_data.page > 1 %}
             <li class="page-item">
-              <a class="page-link" href="?page=1">First</a>
+              <a class="page-link" href="?page=1" style="background-color: #702632; color: #FFFFFA;">First</a>
             </li>
             <li class="page-item">
-              <a class="page-link" href="?page={{ template_data.page|add:'-1' }}">Previous</a>
+              <a class="page-link" href="?page={{ template_data.page|add:'-1' }}" style="background-color: #702632; color: #FFFFFA;">Previous</a>
             </li>
           {% endif %}
 
           <li class="page-item disabled">
-            <span class="page-link">Page {{ template_data.page }} of {{ template_data.total_pages }}</span>
+            <span class="page-link" style="background-color: #702632; color: #FFFFFA;">Page {{ template_data.page }} of {{ template_data.total_pages }}</span>
           </li>
 
           {% if template_data.page < template_data.total_pages %}
             <li class="page-item">
-              <a class="page-link" href="?page={{ template_data.page|add:'1' }}">Next</a>
+              <a class="page-link" href="?page={{ template_data.page|add:'1' }}" style="background-color: #702632; color: #FFFFFA;">Next</a>
             </li>
             <li class="page-item">
-              <a class="page-link" href="?page={{ template_data.total_pages }}">Last</a>
+              <a class="page-link" href="?page={{ template_data.total_pages }}" style="background-color: #702632; color: #FFFFFA;">Last</a>
             </li>
           {% endif %}
         </ul>
@@ -79,10 +78,10 @@
   /* Style for each movie item */
   .movie-item {
       text-align: center;
-      border: 1px solid #ccc;
+      border: 1px solid #912F40;
       padding: 10px;
       border-radius: 8px;
-      background-color: #f9f9f9;
+      background-color: #702632;
   }
 
   .movie-item img {
@@ -94,6 +93,17 @@
   .movie-item h2 {
       font-size: 1.2em;
       margin: 10px 0;
+      color: #FFFFFA;
+  }
+
+  /* Pagination button style */
+  .page-link {
+      background-color: #702632;
+      color: #FFFFFA;
+  }
+  .page-link:disabled {
+      background-color: #702632;
+      color: #FFFFFA;
   }
 </style>
 
