@@ -12,8 +12,6 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 import os
 from pathlib import Path
 
-from django.conf.global_settings import EMAIL_BACKEND
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -27,7 +25,7 @@ SECRET_KEY = 'django-insecure-s^-zdsaxh+4($9z=s+sk)zd_mw4d0(%w+et@r7s&4i*k!wfclp
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["gtmovieapp.onrender.com"]
+ALLOWED_HOSTS = ["gtmovieapp.onrender.com", "127.0.0.1"]
 
 
 # Application definition
@@ -142,10 +140,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #email configs
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.office365.com'
+EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'gtmovies365@outlook.com'
-EMAIL_HOST_PASSWORD = 'srfuywcfzewmkyeb'
+EMAIL_HOST_USER = 'gtmovies76@gmail.com'
+EMAIL_HOST_PASSWORD = 'egapfeisxwuxynjx'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'

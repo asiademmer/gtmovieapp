@@ -33,7 +33,7 @@ class CustomUserCreationForm(UserCreationForm):
             "✅ At least <strong>8 characters</strong> long<br>"
             "✅ Contain <strong>at least one uppercase letter</strong><br>"
             "✅ Contain <strong>at least one number</strong><br>"
-            "❌ Cannot include <strong>&lt;, &gt;, !, @, or #</strong>"
+            "❌ Cannot include <strong>&lt;, &gt;, &, @, or $</strong>"
         )
 
     def clean_password1(self):
@@ -52,18 +52,18 @@ class CustomUserCreationForm(UserCreationForm):
             raise ValidationError("Password must contain at least one digit.")
 
         # bar certain characters (example: spaces and special symbols)
-        if re.search(r'[<>!@#]', password):
-            raise ValidationError("Password cannot contain <, >, !, @, or #.")
+        if re.search(r'[<>&@$]', password):
+            raise ValidationError("Password cannot contain <, >, &, @, or $.")
 
         return password
 
-class Meta:
-    model = User
-    fields = ("username", "email", "password1", "password2")
+    class Meta:
+        model = User
+        fields = ("username", "email", "password1", "password2")
 
-def save(self, commit=True):
-    user = super().save(commit=False)
-    user.email = self.cleaned_data["email"]
-    if commit:
-        user.save()
-    return user
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.email = self.cleaned_data["email"]
+        if commit:
+            user.save()
+        return user
