@@ -28,7 +28,7 @@ def index(request):
 #     request.session['cart'] = cart
 #     return redirect('home.index')
 
-def add_to_cart(request, id):
+def add(request, id):
     get_object_or_404(Movie, id=id)
     cart = request.session.get('cart', {})
     cart[id] = request.POST['quantity']
