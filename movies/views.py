@@ -7,6 +7,50 @@ API_URL = "https://api.themoviedb.org/3/movie/"
 API_KEY = "6729c4cad6820ce8cfdfc6ffe135b332"
 
 
+# def index(request):
+#     search_term = request.GET.get('search')
+#     page_number = request.GET.get('page', 1)
+#
+#     # Fetch movies from API
+#     response = requests.get(f"https://api.themoviedb.org/3/discover/movie?api_key={API_KEY}&page={page_number}")
+#
+#     # Debugging: Print the raw response text to check for any issues
+#     if response.status_code == 200:
+#         try:
+#             api_movies = response.json().get('results', [])  # Parse the JSON
+#
+#             for api_movie in api_movies:
+#                 # Save each movie into the database
+#                 # You need to check if the movie already exists to avoid duplicates
+#                 if not Movie.objects.filter(id=api_movie['id']).exists():
+#                     movie = Movie(
+#                         id=api_movie['id'],
+#                         name=api_movie['title'],
+#                         price=10,  # You can set a default price or fetch it if available
+#                         description=api_movie['overview'],
+#                         image=f"https://image.tmdb.org/t/p/w500{api_movie['poster_path']}"
+#                         # This URL will point to the movie poster image
+#                     )
+#                     movie.save()
+#         except ValueError as e:
+#             print("Error parsing JSON:", e)
+#             api_movies = []
+#     else:
+#         api_movies = []
+#
+#     total_pages = response.json().get('total_pages', 1) if api_movies else 1
+#
+#     if search_term:
+#         api_movies = [movie for movie in api_movies if search_term.lower() in movie["title"].lower()]
+#
+#     template_data = {
+#         'title': 'Movies',
+#         'movies': api_movies,
+#         'page': int(page_number),
+#         'total_pages': total_pages,
+#     }
+#     return render(request, 'movies/index.html', {'template_data': template_data})
+
 def index(request):
     search_term = request.GET.get('search')
     page_number = request.GET.get('page', 1)
@@ -18,6 +62,29 @@ def index(request):
     if response.status_code == 200:
         try:
             api_movies = response.json().get('results', [])  # Parse the JSON
+
+            # Prepare list for bulk insert
+            movies_to_save = []
+
+            for api_movie in api_movies:
+                if not Movie.objects.filter(id=api_movie['id']).exists():
+                    # Check if poster_path exists
+                    image_url = f"https://image.tmdb.org/t/p/w500{api_movie['poster_path']}" if api_movie.get(
+                        'poster_path') else None
+
+                    movie = Movie(
+                        id=api_movie['id'],
+                        name=api_movie['title'],
+                        price=10,  # You can set a default price or fetch it if available
+                        description=api_movie['overview'],
+                        image=image_url
+                    )
+                    movies_to_save.append(movie)
+
+            # Bulk insert movies into the database
+            if movies_to_save:
+                Movie.objects.bulk_create(movies_to_save)
+
         except ValueError as e:
             print("Error parsing JSON:", e)
             api_movies = []
@@ -35,8 +102,8 @@ def index(request):
         'page': int(page_number),
         'total_pages': total_pages,
     }
-    return render(request, 'movies/index.html', {'template_data': template_data})
 
+    return render(request, 'movies/index.html', {'template_data': template_data})
 
 def show(request, id):
     # Fetch movie details from TMDb API
@@ -79,8 +146,7 @@ def edit_review(request, id, review_id):
         template_data = {}
         template_data['title'] = 'Edit Review'
         template_data['review'] = review
-        return render(request, 'movies/edit_review.html',
-            {'template_data': template_data})
+        return render(request, 'movies/edit_review.html',{'template_data': template_data})
     elif request.method == 'POST' and request.POST['comment'] != '':
         review = Review.objects.get(id=review_id)
         review.comment = request.POST['comment']
